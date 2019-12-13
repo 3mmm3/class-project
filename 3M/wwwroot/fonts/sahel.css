@@ -1,0 +1,49 @@
+@font-face {
+    font-family: Sahel;
+    src: url('sahel/eot/Sahel.eot');
+    src: url('sahel/eot/Sahel.eot?#iefix') format('embedded-opentype'),
+         url('sahel/woff2/Sahel.woff2') format('woff2'),
+         url('sahel/woff/Sahel.woff') format('woff'),
+         url('sahel/ttf/Sahel.ttf') format('truetype');
+    font-weight: normal;
+}
+      
+@font-face {
+    font-family: Sahel;
+    src: url('sahel/eot/Sahel-Bold.eot');
+    src: url('sahel/eot/Sahel-Bold.eot?#iefix') format('embedded-opentype'),
+         url('sahel/woff2/Sahel-Bold.woff2') format('woff2'),
+         url('sahel/woff/Sahel-Bold.woff') format('woff'),
+         url('sahel/ttf/Sahel-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: Sahel;
+    src: url('sahel/eot/Sahel-Light.eot');
+    src: url('sahel/eot/Sahel-Light.eot?#iefix') format('embedded-opentype'),
+         url('sahel/woff2/Sahel-Light.woff2') format('woff2'),  
+         url('sahel/woff/Sahel-Light.woff') format('woff'),
+         url('sahel/ttf/Sahel-Light.ttf') format('truetype');
+    font-weight: 300;
+}
+      
+@font-face {
+    font-family: Sahel;
+    src: url('sahel/eot/Sahel-SemiBold.eot');
+    src: url('sahel/eot/Sahel-SemiBold.eot?#iefix') format('embedded-opentype'),
+         url('sahel/woff2/Sahel-SemiBold.woff2') format('woff2'),  
+         url('sahel/woff/Sahel-SemiBold.woff') format('woff'),
+         url('sahel/ttf/Sahel-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Sahel;
+    src: url('sahel/eot/Sahel-Black.eot');
+    src: url('sahel/eot/Sahel-Black.eot?#iefix') format('embedded-opentype'),
+         url('sahel/woff2/Sahel-Black.woff2') format('woff2'),  
+         url('sahel/woff/Sahel-Black.woff') format('woff'),
+         url('sahel/ttf/Sahel-Black.ttf') format('truetype');
+    font-weight: 900;
+}

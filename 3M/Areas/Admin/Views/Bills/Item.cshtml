@@ -1,0 +1,101 @@
+﻿@model _3M.Dtos.Sales.BillDto
+@{
+    ViewData["Title"] = "مشهاده سفارشات";
+}
+
+    <div>
+        <div class="card">
+            <div class="card-header">
+                <h2>مشاهده سفارش</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>نام سفارش دهنده</th>
+                        <td>@Model.CustomerName</td>
+                    </tr>
+                    <tr>
+                        <th>نام دریافت کننده</th>
+                        <td>@Model.RecipientName</td>
+                    </tr>
+                    <tr>
+                        <th>آدرس</th>
+                        <td>@(Model.Province) - @(Model.City) - @(Model.Address)</td>
+                    </tr>
+                    <tr>
+                        <th>کد پستی</th>
+                        <td>@Model.PostalCode</td>
+                    </tr>
+                    <tr>
+                        <th>شماره تماس</th>
+                        <td>@Model.Tel</td>
+                    </tr>
+                    <tr>
+                        <th>تاریخ ثبت</th>
+                        <td>@Model.RegisterDate</td>
+                    </tr>
+                    <tr>
+                        <th>مبلغ کل</th>
+                        <td>@(Model.TotalPrice.ToString("#,##0")) تومان</td>
+                    </tr>
+                    <tr>
+                        <th>پرداخت شده</th>
+                        <td>
+                            @if (Model.IsPaid)
+                            {
+                                <span class="text-success">بله</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">خیر</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>پردازش شده</th>
+                        <td>
+                            @if (Model.IsProcessed)
+                            {
+                                <span class="text-success">بله</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">خیر</span>
+                            }
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="card-header">
+                    لیست سفارشات
+                </div>
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>نام محصول</th>
+                            <th>قیمت محصول</th>
+                            <th>تعداد</th>
+                            <th>مبلغ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ShoppingCart)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td>@(item.ProductPrice.ToString("#,##0")) تومان</td>
+                                <td>@item.Count</td>
+                                <td>@(item.ItemPrice.ToString("#,##0")) تومان</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (!Model.IsProcessed)
+                {
+                    <a class="btn btn-success" asp-action="Proceed" asp-route-id="@Model.Id">تایید و پردازش سفارش</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">حذف</a>
+                }
+                <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
+            </div>
+        </div>
+    </div>

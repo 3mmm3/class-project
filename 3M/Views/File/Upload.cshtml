@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<h1>مرکز آپلود سایت</h1>
+
+<form asp-controller="File" asp-action="Upload" method="post"
+      enctype="multipart/form-data">
+
+    <input type="file" name="file" />
+    <button type="submit">آپلود فایل</button>
+</form>

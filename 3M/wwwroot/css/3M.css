@@ -1,0 +1,23 @@
+﻿html {
+    height:100%;
+}
+body {
+    min-height:100%;
+    padding:0;
+    margin:0;
+    position:relative;
+    font-family: Sahel;
+}
+
+body::after {
+    content:'';
+    display:block;
+    height:200px;
+}
+
+footer{ 
+    position:absolute; 
+    bottom:0; 
+    width:100%;
+    height: 200px;
+}

@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h2>پنل مدیریت فروشگاه</h2>
+        </div>
+        <div class="card-body">
+            <div style="display: flex; flex-flow: row wrap;">
+                <a asp-area="Admin" asp-controller="Category" asp-action="Index">
+                    <div class="item-box" style="background-color: #FED766; color: black;">
+                        <span class="item-text">دسته بندی ها</span>
+                    </div>
+                </a>
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index">
+                    <div class="item-box" style="background-color: #2AB7CA;">
+                        <span class="item-text">محصولات</span>
+                    </div>
+                </a>
+                <a asp-area="Admin" asp-controller="Invoices" asp-action="Index">
+                    <div class="item-box" style="background-color: #FE4A49;">
+                        <span class="item-text">سفارشات</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles
+{
+    <style>
+
+        .item-box {
+            width: 200px;
+            height: 100px;
+            color: white;
+            position: relative;
+            transition: 0.4s;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+            .item-box:hover {
+                transform: scale(1.1);
+                z-index: 1;
+            }
+
+        .item-text {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+        }
+    </style>
+}

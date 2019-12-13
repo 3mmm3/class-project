@@ -1,0 +1,36 @@
+﻿@model _3M.Dtos.Products.CategoryDto
+@{
+    ViewData["Title"] = "ثبت دسته بندی";
+}
+
+<div class="row">
+    <div class="offset-lg-4 col-lg-4 offset-md-2 col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>ثبت دسته بندی جدید</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Key" class="control-label"></label>
+                        <input asp-for="Key" class="form-control" />
+                        <span asp-validation-for="Key" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ثبت" class="btn btn-primary" />
+                        <a asp-action="Index">بازگشت</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

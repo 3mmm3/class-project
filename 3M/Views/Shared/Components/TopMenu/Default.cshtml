@@ -1,0 +1,104 @@
+﻿@using _3M.Constants
+@model IList<_3M.Dtos.Products.CategoryDto>
+@{
+    ViewData["Title"] = "Default";
+}
+@functions
+{
+
+    public bool IsLoggedIn()
+    {
+        return User.Identity.IsAuthenticated;
+    }
+
+    public bool IsAdmin()
+    {
+        if (!IsLoggedIn())
+            return false;
+
+        return User.IsInRole(RoleConstants.Admin);
+    }
+
+    public string GetUserName()
+    {
+        if (!IsLoggedIn())
+            return "کاربر مهمان";
+        var nameClaim = User.Claims.FirstOrDefault(i => i.Type == ClaimContants.FullName);
+        return nameClaim != null ? nameClaim.Value : User.Identity.Name;
+    }
+
+}
+    <nav class="navbar navbar-expand-lg navbar-light blue-grey lighten-5 mb-4">
+        <a class="navbar-brand" href="~/pic/LOGO.jpg"></a>
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                </li>
+                @if (IsAdmin())
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            پنل مدیریت
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">دسته بندی ها</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Home" asp-action="Index">محصولات</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Invoices" asp-action="Index">سفارشات</a>
+                        </div>
+                    </li>
+                }
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        محصولات
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var cat in Model)
+                        {
+                            <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Index" asp-route-category="@(cat.Key)">@(cat.Name)</a>
+                        }
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Index">همه محصولات</a>
+                    </div>
+                </li>
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0" asp-controller="Products" asp-action="Index" method="get">
+                <input class="form-control z-depth-1 mr-sm-2" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                <button class="btn btn-secondary btn-rounded my-2 my-sm-0" type="submit">جستجو</button>
+            </form>
+
+        </div>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index">سبد خرید</a>
+        </li>
+        <div class="dropdown">
+
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @GetUserName()
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @if (IsLoggedIn())
+                {
+                    <a class="dropdown-item" asp-area="" asp-controller="UserProfile" asp-action="Index">پروفایل </a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ChangePassword">تغییر رمز </a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="SignOut">خروج  </a>
+                }
+                else
+                {
+                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="SignIn">ورود</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="SignUp">ثبت نام</a>
+                }
+            </div>
+        </div>
+    </nav>
+

@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace _3M.Dtos.Products
+{
+    public class ProductDto
+    {
+        public Guid Id { get; set; }
+        public string Key { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageAddress { get; set; }
+        public decimal Price { get; set; }
+        public IList<propertyDto> Property { get; set; }
+        public CategoryDto Category { get; set; }
+    }
+}

@@ -1,0 +1,135 @@
+﻿@using _3M.Helpers
+@model _3M.Areas.Admin.ViewModels.BillListViewModel
+@inject PagingHelper PagingHelper
+
+@{
+    ViewData["Title"] = "درخواست های خرید";
+}
+
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h2>درخواست های خرید</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>نام خریدار</th>
+                        <th>نام تحویل گیرنده</th>
+                        <th>تلفن</th>
+                        <th>شهر</th>
+                        <th>مبلغ کل</th>
+                        <th>تعداد محصولات</th>
+                        <th>پرداخت شده</th>
+                        <th>پردازش شده</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Bills)
+                    {
+                        <tr>
+                            <td>@item.CustomerName</td>
+                            <td>@item.RecipientName</td>
+                            <td>@item.Tel</td>
+                            <td>@item.City</td>
+                            <td>@item.TotalPrice.ToString("#,##0")</td>
+                            <td>@item.ShoppingCart.Sum(i => i.Count)</td>
+                            <td>
+                                @if (item.IsPaid)
+                                {
+                                    <span class="text-success">بله</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">خیر</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsProcessed)
+                                {
+                                    <span class="text-success">بله</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">خیر</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-warning" asp-action="Item" asp-route-id="@(item.Id)">مشاهده</a>
+                                <button type="button" class="btn btn-danger delete-btn" data-id="@(item.Id)">
+                                    حذف
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<nav class="my-5" aria-label="Products Page navigation">
+    <ul class="pagination justify-content-center">
+        @foreach (var pagingItem in PagingHelper.GetPagings(Model.CurrentPage, Model.PagesCount))
+        {
+            <li class="page-item @(pagingItem.Active ? "active" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@pagingItem.PageNumber">
+                    @pagingItem.Display
+                    @if (pagingItem.Active)
+                    {
+                        <span class="sr-only">(current)</span>
+                    }
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="delete-confirm-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">حذف آیتم</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                آیا مایل به حذف این مورد می باشید؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر</button>
+                <button type="button" class="btn btn-danger" data-id="" id="confirm-delete-btn">بله</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('.delete-btn').on('click',
+                function() {
+                    var id = $(this).data('id');
+                    $('#confirm-delete-btn').data('id', id);
+
+                    $('#delete-confirm-modal').modal('show');
+                });
+
+            $('#confirm-delete-btn').on('click',
+                function() {
+                    var id = $(this).data('id');
+                    window.location = window.location.origin + '@Url.Action("Delete", "Invoices")' + "/" + id;
+                });
+        });
+    </script>
+}
+
+

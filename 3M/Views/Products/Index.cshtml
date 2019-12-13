@@ -1,0 +1,102 @@
+﻿@using _3M.DataModels
+@using _3M.Helpers
+@using _3M.ViewModels.Products
+@model ProductsListViewModel
+@inject PagingHelper PagingHelper
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <div class="card">
+        <div class="card-header p-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0" style="background-color: unset; font-size: 1.5em;">
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a asp-action="Index">محصولات</a>
+                    </li>
+                    @if (Model.Category != null)
+                    {
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a asp-action="Index" asp-route-category="@Model.Category.Key">@Model.Category.Name</a>
+                        </li>
+                    }
+                </ol>
+            </nav>
+        </div>
+        <div class="card-body products-list">
+            @foreach (var product in Model.Products)
+            {
+                <div class="card product">
+                    <img src="@product.ImageAddress" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <strong class="card-title">@product.Name</strong>
+                        <p class="card-text">
+                            قیمت :
+                            <strong class="text-danger">@product.Price.ToString("#,##0") تومان</strong>
+                        </p>
+                        <a asp-action="Details" asp-route-product="@product.Key" class="btn btn-primary">مشاهده و خرید</a>
+                    </div>
+                </div>
+            }
+
+            @for (int i = 0; i < 10; i++)
+            {
+                <div class="product"></div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<nav class="my-5" aria-label="Products Page navigation">
+    <ul class="pagination justify-content-center">
+        @foreach (var pagingItem in PagingHelper.GetPagings(Model.CurrentPage, Model.PagesCount))
+        {
+            <li class="page-item @(pagingItem.Active ? "active" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@pagingItem.PageNumber"
+                   asp-route-search="@Context.Request.Query["search"]"
+                   asp-route-category="@Context.Request.Query["category"]">
+                    @pagingItem.Display
+                    @if (pagingItem.Active)
+                    {
+                        <span class="sr-only">(current)</span>
+                    }
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+
+@section Styles
+{
+    <style>
+
+        .products-list {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+        }
+
+        .product {
+            margin: 2px;
+            flex: 1 1 14rem;
+            border-radius: 0;
+            border-color: #eeeeee;
+            transition: 0.4s;
+        }
+
+            .product:hover {
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+                z-index: 1;
+            }
+
+            .product:empty {
+                height: 0;
+                border: none;
+            }
+    </style>
+}
+
